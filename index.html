@@ -1,0 +1,77 @@
+---
+layout: null
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ site.title }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="masthead">
+  <h1>{{ site.title }}</h1>
+  <p class="about" id="about">Loading the corpus…</p>
+</header>
+
+<main>
+  <form class="search" id="form" role="search" onsubmit="return false">
+    <label for="q" class="visually-hidden">Search the corpus</label>
+    <input id="q" type="search" autocomplete="off" spellcheck="false"
+           placeholder="e.g. vāta pitta, or kṛṣṇ(a|e)" disabled>
+
+    <div class="controls">
+      <fieldset class="modes">
+        <legend class="visually-hidden">Search mode</legend>
+        <label><input type="radio" name="mode" value="words" checked> Keywords</label>
+        <label><input type="radio" name="mode" value="phrase"> Phrase</label>
+        <label><input type="radio" name="mode" value="regex"> Regular expression</label>
+      </fieldset>
+      <label class="check"><input type="checkbox" id="fold" checked> Ignore diacritics</label>
+      <label class="check"><input type="checkbox" id="whole"> Whole words</label>
+      <label class="check"><input type="checkbox" id="ctx"> Show neighbouring lines</label>
+    </div>
+
+    <div class="controls">
+      <label for="tf" class="tf-label">Limit to texts whose name contains</label>
+      <input id="tf" type="search" autocomplete="off" spellcheck="false"
+             placeholder="e.g. purāṇa" list="textnames">
+      <datalist id="textnames"></datalist>
+      <span id="tfcount" class="note"></span>
+    </div>
+  </form>
+
+  <details class="help">
+    <summary>How searching works</summary>
+    <p><b>Keywords</b> finds lines containing all the words you type, in any order.
+    <b>Phrase</b> finds the words together, in order.
+    <b>Regular expression</b> works like <code>grep -i</code> on each line (JavaScript syntax).</p>
+    <p><b>Ignore diacritics</b> lets <code>siva</code> find <i>śiva</i> and <code>krsna</code> find <i>kṛṣṇa</i>.
+    It applies to regular expressions too.
+    <b>Whole words</b> matches only complete space-separated words; remember that sandhi often joins words.</p>
+    <p>Regular expression examples:
+    <code>^atha</code> (lines beginning with <i>atha</i>),
+    <code>rasa(ḥ|m|sya)</code>,
+    <code>vāta.{0,20}pitta</code> (<i>pitta</i> within 20 characters after <i>vāta</i>),
+    <code>āha\s*/+$</code> (lines ending in <i>āha</i> before the daṇḍa).</p>
+    <p>References like <b>12.3</b> are the DCS numbering (verse or sentence 12, line 3) at the end of each line in the source file.
+    Click one to open that line on GitHub. You can bookmark or share any search: the address bar keeps it.</p>
+  </details>
+
+  <p id="status" class="status" aria-live="polite"></p>
+  <nav id="summary" class="summary"></nav>
+  <div id="results"></div>
+</main>
+
+<footer class="foot">
+  Texts from the <a href="http://kjc-fs-cluster.kjc.uni-heidelberg.de/dcs/">Digital Corpus of Sanskrit</a> (Oliver Hellwig),
+  as published in <a href="https://github.com/cltk/sanskrit_text_dcs">cltk/sanskrit_text_dcs</a>.
+</footer>
+
+<script src="assets/js/search.js"></script>
+</body>
+</html>

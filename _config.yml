@@ -1,0 +1,6 @@
+title: DCS search
+description: Search the Digital Corpus of Sanskrit
+exclude:
+  - README.md
+  - scripts
+  - _corpus_src
